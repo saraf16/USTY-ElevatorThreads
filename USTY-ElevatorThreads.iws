@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ff93a3e-7fe9-44b7-b838-f1ece01b6f47" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/.classpath" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/.project" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/ElevatorThreads_Sara-Asgeir.ipr" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/ElevatorThreads_Sara-Asgeir.iws" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/ElevatorThreads_change-to-your-name.iml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/src/com/ru/usty/elevator/ElevatorMainProgram.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/src/com/ru/usty/elevator/ElevatorScene.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/src/com/ru/usty/elevator/Person.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/src/com/ru/usty/elevator/visualization/ElevatorGraphics.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ElevatorThreads_Sara-Asgeir/src/com/ru/usty/elevator/visualization/TestSuite.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java" afterPath="$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +27,27 @@
       <file leaf-file-name="ElevatorScene.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="416">
+              <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+              <folding>
+                <element signature="e#5246#5247#0" expanded="true" />
+                <element signature="e#5274#5275#0" expanded="true" />
+                <element signature="e#5402#5403#0" expanded="true" />
+                <element signature="e#5445#5446#0" expanded="true" />
+                <element signature="e#5557#5558#0" expanded="true" />
+                <element signature="e#5588#5589#0" expanded="true" />
+                <element signature="e#5722#5723#0" expanded="true" />
+                <element signature="e#5771#5772#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSuite.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/visualization/TestSuite.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="580">
+              <caret line="277" column="9" lean-forward="true" selection-start-line="271" selection-start-column="8" selection-end-line="277" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -56,12 +65,24 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>in</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java" />
+      </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
@@ -102,6 +123,13 @@
               <item name="USTY-ElevatorThreads" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="elevator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="USTY-ElevatorThreads" type="b2602c69:ProjectViewProjectNode" />
+              <item name="USTY-ElevatorThreads" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="elevator" type="462c0819:PsiDirectoryNode" />
+              <item name="visualization" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -226,6 +254,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="635" y="23" width="805" height="837" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -239,7 +268,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24968944" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24968944" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -262,14 +291,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorMainProgram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/Person.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -278,11 +299,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/visualization/TestSuite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="277" column="9" lean-forward="true" selection-start-line="271" selection-start-column="8" selection-end-line="277" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorMainProgram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="416">
+          <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+          <folding>
+            <element signature="e#5246#5247#0" expanded="true" />
+            <element signature="e#5274#5275#0" expanded="true" />
+            <element signature="e#5402#5403#0" expanded="true" />
+            <element signature="e#5445#5446#0" expanded="true" />
+            <element signature="e#5557#5558#0" expanded="true" />
+            <element signature="e#5588#5589#0" expanded="true" />
+            <element signature="e#5722#5723#0" expanded="true" />
+            <element signature="e#5771#5772#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

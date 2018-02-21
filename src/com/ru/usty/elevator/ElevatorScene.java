@@ -13,44 +13,94 @@ import java.util.concurrent.Semaphore;
 
 public class ElevatorScene {
 
+
     this.scene;
+
+
 	//TO SPEED THINGS UP WHEN TESTING,
 	//feel free to change this.  It will be changed during grading
-    public static Semaphore personCountMUTEX;
+
     public static Semaphore semaphore1; // mætti mögulega vera private?
+
     public static Semaphore semaphore2;// mættu mögulega vara private?
+
     public static ElevatorScene scene; //geturm verið her sem stakið eða inn í
     //Person og þá er Person með private ElevatorScene scene en þa þarf smið
 
+	public static boolean elevetorMayDie;
+
+
+	//ekki láta þessa tölu niður fyrir 50 eða 30 millisecontur
 	public static final int VISUALIZATION_WAIT_TIME = 500;  //milliseconds
 
 	private int numberOfFloors;
 	private int numberOfElevators;
+	private Thread elevatorTread = null;
 
 	ArrayList<Integer> personCount; //use if you want but
 									//throw away and
 									//implement differently
 									//if it suits you
 	ArrayList<Integer> exitedCount = null;
+
+
 	public static Semaphore exitedCountMutex;
+
+	public static Semaphore elevatorWaitMUTEX; //nota inn i PERSON inn í try hja þar
+	//þar sem semaphore er að waita og gera þá utan um hana mutex
+	//ég mundi segja mutex fyrir hverja hæð
+
+	public static Semaphore personCountMUTEX;
+
+	//á lika vera elveter count
+
+
+
 
 	//Base function: definition must not change
 	//Necessary to add your code in this one
 	public void restartScene(int numberOfFloors, int numberOfElevators) {
 
-	    scene = this; // rett?
+		elevetorMayDie = true;
+
+		if(elevatorTread != null){
+			if(elevatorTread.isAlive()){
+
+				try{
+					elevatorTread.join();
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+
+		elevetorMayDie = false;
+
+		scene = this;
         semaphore1 = new Semaphore(6);
         semaphore2 = new Semaphore(6);
         personCountMUTEX = new Semaphore(1);
 
-        new Thread(new Runnable()) {
+
+		elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
 
             public void run () {
+
+            	if(ElevatorScene.elevetorMayDie){
+            		return;
+				}
 
                 EleveterScene.semaphore1.release(); //signal
             }
 
-        }).start();
+        });
+
+		elevatorTread.start();
+
+
 
 
 
@@ -99,23 +149,38 @@ public class ElevatorScene {
 		 * (you don't have to join() yourself)
 		 */
 
-		//dumb code, replace it!
 
+
+		try {
+			personCountMUTEX.acquire();
+				personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
+			personCountMUTEX.release();
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		//lika hægt að kalla með fallinu elevevatorScene.scene.incremenNumber OF peopleWAaitingAtFloor
 		personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
-		return null;  //this means that the testSuite will not wait for the threads to finish
+		return thread;  //this means that the testSuite will not wait for the threads to finish
 	}
 
 	//Base function: definition must not change, but add your code
 	public int getCurrentFloorForElevator(int elevator) {
 
 
-		//dumb code, replace it!
+		//dumb code, replace it
 		return 1;
 	}
 
 	//Base function: definition must not change, but add your code
 	public int getNumberOfPeopleInElevator(int elevator) {
-		
+		//lifta relesar þegar hun kemur á hæð 6 sinnum - kallar á fallið signal
+		//eins oft og hun er með laus pláss
+		//ef hun kemur ekki tóm þá bbara 6 minus hvað eru margir í
+		//getum notað þetta fall
+		//ef við gerum þetta fall rétt
+		// ef liftan er ekki full þá kalla á wait?
+
 		//dumb code, replace it!
 		switch(elevator) {
 		case 1: return 1;
@@ -131,8 +196,6 @@ public class ElevatorScene {
 	}
 
     public void decrementNumberOfPeopleWaitingAtFloor(int floor) {
-
-            personCountMUTEX = new Semaphore(1);
 
         try {
 
