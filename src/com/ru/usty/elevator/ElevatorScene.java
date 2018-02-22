@@ -27,7 +27,7 @@ public class ElevatorScene {
 	//lækka semphoru með að kalla á aquire/wait
 	//passa lyftan kalli ekki á aqure á semphore sem er komin niður i 0
 	//og við þurfum þá að mutle exlute hana á meðan svo engin annar komist inn
-	// 
+	// segðir að við getum gert array af semphorum
 
 
 
@@ -95,11 +95,11 @@ public class ElevatorScene {
 
 		scene = this;
         semaphore1 = new Semaphore(6);
-        semaphore2 = new Semaphore(6);
+        //semaphore2 = new Semaphore(6);
         personCountMUTEX = new Semaphore(1);
 
 
-		/*elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
+		elevatorTread = new Thread(new Runnable() { //þarf að breyta þessu?
 
             public void run () {
 
@@ -107,12 +107,14 @@ public class ElevatorScene {
             		return;
 				}
 
-                EleveterScene.semaphore1.release(); //signal
+                for(int i = 0; i < 16; i++){
+                    ElevatorScene.semaphore1.release(); //signal
+                }
             }
 
         });
 
-		elevatorTread.start();*/
+		elevatorTread.start();
 
 
 
@@ -214,7 +216,7 @@ public class ElevatorScene {
         try {
 
             personCountMUTEX.acquire();
-            personCount.set(floor, (personCount.get(floor) - 1));
+                personCount.set(floor, (personCount.get(floor) - 1));
             personCountMUTEX.release();
 
         } catch (InterruptedException e) {
