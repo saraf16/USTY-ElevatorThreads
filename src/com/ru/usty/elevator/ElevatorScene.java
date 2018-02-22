@@ -14,7 +14,7 @@ import java.util.concurrent.Semaphore;
 public class ElevatorScene {
 
 
-    this.scene;
+    //this.scene;
 
     //þegar lyftan kemur niður segir hun relase * pláss  þá hleypir hun inn alltaf
 	//jafn mörgum og hun á pláss fyrir
@@ -99,7 +99,7 @@ public class ElevatorScene {
         personCountMUTEX = new Semaphore(1);
 
 
-		elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
+		/*elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
 
             public void run () {
 
@@ -112,7 +112,7 @@ public class ElevatorScene {
 
         });
 
-		elevatorTread.start();
+		elevatorTread.start();*/
 
 
 
