@@ -14,7 +14,7 @@ import java.util.concurrent.Semaphore;
 public class ElevatorScene {
 
 
-    this.scene;
+    //this.scene;
 
 
 	//TO SPEED THINGS UP WHEN TESTING,
@@ -85,7 +85,7 @@ public class ElevatorScene {
         personCountMUTEX = new Semaphore(1);
 
 
-		elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
+		/*elevatorTread = new Thread(new Runnable()) { //þarf að breyta þessu?
 
             public void run () {
 
@@ -98,7 +98,7 @@ public class ElevatorScene {
 
         });
 
-		elevatorTread.start();
+		elevatorTread.start();*/
 
 
 
