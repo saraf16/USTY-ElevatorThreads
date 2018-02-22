@@ -16,6 +16,20 @@ public class ElevatorScene {
 
     this.scene;
 
+    //þegar lyftan kemur niður segir hun relase * pláss  þá hleypir hun inn alltaf
+	//jafn mörgum og hun á pláss fyrir
+	//persóna fer inn í lyftu og ++ personInElveterCount
+	//ein semehora per biðröð - vanda mál ef velja milli semphora og fólks?
+	//lyftan þarf ekki að vita af neinu
+	// ef lyftan tekur inn 4 og það er þegar 1 þá þarf að passa að hun læki samt sephorun niður i
+	//0 svo það geti engin smegið sér i lyftu eftir að hun fer
+	// ef við viljum hækka semphor köllum við á relase/signal
+	//lækka semphoru með að kalla á aquire/wait
+	//passa lyftan kalli ekki á aqure á semphore sem er komin niður i 0
+	//og við þurfum þá að mutle exlute hana á meðan svo engin annar komist inn
+	// 
+
+
 
 	//TO SPEED THINGS UP WHEN TESTING,
 	//feel free to change this.  It will be changed during grading

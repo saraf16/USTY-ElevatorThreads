@@ -27,17 +27,17 @@
       <file leaf-file-name="ElevatorScene.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+            <state relative-caret-position="420">
+              <caret line="29" column="7" lean-forward="false" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
               <folding>
-                <element signature="e#5246#5247#0" expanded="true" />
-                <element signature="e#5274#5275#0" expanded="true" />
-                <element signature="e#5402#5403#0" expanded="true" />
-                <element signature="e#5445#5446#0" expanded="true" />
-                <element signature="e#5557#5558#0" expanded="true" />
-                <element signature="e#5588#5589#0" expanded="true" />
-                <element signature="e#5722#5723#0" expanded="true" />
-                <element signature="e#5771#5772#0" expanded="true" />
+                <element signature="e#5940#5941#0" expanded="true" />
+                <element signature="e#5968#5969#0" expanded="true" />
+                <element signature="e#6096#6097#0" expanded="true" />
+                <element signature="e#6139#6140#0" expanded="true" />
+                <element signature="e#6251#6252#0" expanded="true" />
+                <element signature="e#6282#6283#0" expanded="true" />
+                <element signature="e#6416#6417#0" expanded="true" />
+                <element signature="e#6465#6466#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -317,17 +317,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ru/usty/elevator/ElevatorScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="72" column="40" lean-forward="true" selection-start-line="72" selection-start-column="40" selection-end-line="72" selection-end-column="40" />
+        <state relative-caret-position="420">
+          <caret line="29" column="7" lean-forward="false" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
           <folding>
-            <element signature="e#5246#5247#0" expanded="true" />
-            <element signature="e#5274#5275#0" expanded="true" />
-            <element signature="e#5402#5403#0" expanded="true" />
-            <element signature="e#5445#5446#0" expanded="true" />
-            <element signature="e#5557#5558#0" expanded="true" />
-            <element signature="e#5588#5589#0" expanded="true" />
-            <element signature="e#5722#5723#0" expanded="true" />
-            <element signature="e#5771#5772#0" expanded="true" />
+            <element signature="e#5940#5941#0" expanded="true" />
+            <element signature="e#5968#5969#0" expanded="true" />
+            <element signature="e#6096#6097#0" expanded="true" />
+            <element signature="e#6139#6140#0" expanded="true" />
+            <element signature="e#6251#6252#0" expanded="true" />
+            <element signature="e#6282#6283#0" expanded="true" />
+            <element signature="e#6416#6417#0" expanded="true" />
+            <element signature="e#6465#6466#0" expanded="true" />
           </folding>
         </state>
       </provider>
