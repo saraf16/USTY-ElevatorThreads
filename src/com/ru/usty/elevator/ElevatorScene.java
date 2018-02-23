@@ -97,7 +97,7 @@ public class ElevatorScene {
         semaphore1 = new Semaphore(6);
         //semaphore2 = new Semaphore(6);
         personCountMUTEX = new Semaphore(1);
-
+        elevatorWaitMUTEX = new Semaphore(1);
 
 		elevatorTread = new Thread(new Runnable() { //þarf að breyta þessu?
 
@@ -155,7 +155,9 @@ public class ElevatorScene {
 	//Necessary to add your code in this one
 	public Thread addPerson(int sourceFloor, int destinationFloor) {
 
-	    Thread thread = new Thread(new Person());
+	    Thread thread = new Thread(new Person(sourceFloor,destinationFloor));
+	    //Thread thread = new Thread(new Person(sourceFloor, destinationFloor));
+	    thread.start();
 		/**
 		 * Important to add code here to make a
 		 * new thread that runs your person-runnable
@@ -167,16 +169,17 @@ public class ElevatorScene {
 
 
 
-		try {
+		/*try {
 			personCountMUTEX.acquire();
 				personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
 			personCountMUTEX.release();
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		//lika hægt að kalla með fallinu elevevatorScene.scene.incremenNumber OF peopleWAaitingAtFloor
-		personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
+		//personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
+	    incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 		return thread;  //this means that the testSuite will not wait for the threads to finish
 	}
 
@@ -214,9 +217,20 @@ public class ElevatorScene {
     public void decrementNumberOfPeopleWaitingAtFloor(int floor) {
 
         try {
-
-            personCountMUTEX.acquire();
+            ElevatorScene.personCountMUTEX.acquire();
                 personCount.set(floor, (personCount.get(floor) - 1));
+                ElevatorScene.personCountMUTEX.release();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void incrementNumberOfPeopleWaitingAtFloor(int floor) {
+
+        try {
+            personCountMUTEX.acquire();
+                personCount.set(floor, (personCount.get(floor) + 1));
             personCountMUTEX.release();
 
         } catch (InterruptedException e) {

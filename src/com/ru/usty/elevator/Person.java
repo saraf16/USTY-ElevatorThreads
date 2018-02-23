@@ -3,15 +3,17 @@ import java.util.concurrent.Semaphore;
 
 public class Person implements Runnable {
 
-	/*int src, dst;
-	public Person(int src, int dst) {
-		this.src = src;
-		this.dst = dst;
-	}*/
+	int sourceFloor, destinationFloor;
+	private ElevatorScene scene;
+	public Person(int sourceFloor, int destinationFloor) {
+		this.sourceFloor = sourceFloor;
+		this.destinationFloor = destinationFloor;
+	}
+
 	
 	@Override
 	public void run() {
-		ElevatorScene.elevatorWaitMUTEX = new Semaphore(1);
+		//ElevatorScene.elevatorWaitMUTEX = new Semaphore(1);
 		try {
 			ElevatorScene.elevatorWaitMUTEX.acquire(); 
 				ElevatorScene.semaphore1.acquire(); // wait
@@ -20,6 +22,10 @@ public class Person implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		// Person is in elevator(through barrier)
+		ElevatorScene.scene.decrementNumberOfPeopleWaitingAtFloor(sourceFloor);
+		System.out.println("Person thread released");
 	}
 
 }
