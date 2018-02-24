@@ -98,8 +98,8 @@ public class ElevatorScene {
 		elevetorMayDie = false;
 
 		scene = this;
-        inSemaphore = new Semaphore(1);
-        outSemaphore = new Semaphore(1);
+        inSemaphore = new Semaphore(6);
+        outSemaphore = new Semaphore(6);
         personCountMUTEX = new Semaphore(1);
         elevatorWaitMUTEX = new Semaphore(1);
 
@@ -112,21 +112,23 @@ public class ElevatorScene {
 				}
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-				ElevatorScene.inSemaphore.release(); //signal
 
 
+                while(ElevatorScene.inSemaphore. != 0) {
+                    ElevatorScene.inSemaphore.release(); //signal
 
-                numberOfPeopleInEleveter++;
 
-                decrementNumberOfPeopleWaitingAtFloor(0);
+                    numberOfPeopleInEleveter++;
 
+                    decrementNumberOfPeopleWaitingAtFloor(0);
+                }
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -134,7 +136,7 @@ public class ElevatorScene {
                 ElevatorScene.currentFloor++;
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
