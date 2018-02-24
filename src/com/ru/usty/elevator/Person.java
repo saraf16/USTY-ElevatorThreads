@@ -22,17 +22,31 @@ public class Person implements Runnable {
 		// 6. decrement people in elevator
 
 		//ElevatorScene.elevatorWaitMUTEX = new Semaphore(1);
+
+		ElevatorScene.scene.incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
+
 		try {
 			ElevatorScene.elevatorWaitMUTEX.acquire(); 
-				ElevatorScene.semaphore1.acquire(); // wait
+				ElevatorScene.inSemaphore.acquire(); // wait
 			ElevatorScene.elevatorWaitMUTEX.release();
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		// Person is in elevator(through barrier)
+
 		ElevatorScene.scene.decrementNumberOfPeopleWaitingAtFloor(sourceFloor);
+
+
+		try {
+			ElevatorScene.outSemaphore.acquire(); //wait
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+
+
+
+		// Person is in elevator(through barrier)
 		System.out.println("Person thread released");
 	}
 

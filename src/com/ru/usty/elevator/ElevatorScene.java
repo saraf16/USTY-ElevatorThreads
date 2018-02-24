@@ -34,14 +34,18 @@ public class ElevatorScene {
 	//TO SPEED THINGS UP WHEN TESTING,
 	//feel free to change this.  It will be changed during grading
 
-    public static Semaphore semaphore1; // mætti mögulega vera private?
+    public static Semaphore inSemaphore; // mætti mögulega vera private?
 
-    public static Semaphore semaphore2;// mættu mögulega vara private?
+    public static Semaphore outSemaphore;// mættu mögulega vara private?
 
     public static ElevatorScene scene; //geturm verið her sem stakið eða inn í
     //Person og þá er Person með private ElevatorScene scene en þa þarf smið
 
 	public static boolean elevetorMayDie;
+
+	public static int currentFloor;
+
+	public static int numberOfPeopleInEleveter = 0;
 
 
 	//ekki láta þessa tölu niður fyrir 50 eða 30 millisecontur
@@ -94,8 +98,8 @@ public class ElevatorScene {
 		elevetorMayDie = false;
 
 		scene = this;
-        semaphore1 = new Semaphore(6);
-        //semaphore2 = new Semaphore(6);
+        inSemaphore = new Semaphore(1);
+        outSemaphore = new Semaphore(1);
         personCountMUTEX = new Semaphore(1);
         elevatorWaitMUTEX = new Semaphore(1);
 
@@ -107,9 +111,39 @@ public class ElevatorScene {
             		return;
 				}
 
-                for(int i = 0; i < 16; i++){
-                    ElevatorScene.semaphore1.release(); //signal
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+				ElevatorScene.inSemaphore.release(); //signal
+
+
+
+                numberOfPeopleInEleveter++;
+
+                decrementNumberOfPeopleWaitingAtFloor(0);
+
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                ElevatorScene.currentFloor++;
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ElevatorScene.outSemaphore.release(); //signal
+
+                numberOfPeopleInEleveter--;
+
+                personExitsAtFloor(1);
+                getExitedCountAtFloor(1);
             }
 
         });
@@ -155,9 +189,8 @@ public class ElevatorScene {
 	//Necessary to add your code in this one
 	public Thread addPerson(int sourceFloor, int destinationFloor) {
 
-	    Thread thread = new Thread(new Person(sourceFloor,destinationFloor));
-	    //Thread thread = new Thread(new Person(sourceFloor, destinationFloor));
-	    thread.start();
+        Thread thread = new Thread(new Person(sourceFloor, destinationFloor));
+        thread.start();
 		/**
 		 * Important to add code here to make a
 		 * new thread that runs your person-runnable
@@ -167,19 +200,7 @@ public class ElevatorScene {
 		 * (you don't have to join() yourself)
 		 */
 
-
-
-		/*try {
-			personCountMUTEX.acquire();
-				personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
-			personCountMUTEX.release();
-
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-		//lika hægt að kalla með fallinu elevevatorScene.scene.incremenNumber OF peopleWAaitingAtFloor
-		//personCount.set(sourceFloor, personCount.get(sourceFloor) + 1);
-	    incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
+	    //incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 		return thread;  //this means that the testSuite will not wait for the threads to finish
 	}
 
@@ -188,7 +209,7 @@ public class ElevatorScene {
 
 
 		//dumb code, replace it
-		return 1;
+		return currentFloor;
 	}
 
 	//Base function: definition must not change, but add your code
@@ -200,12 +221,7 @@ public class ElevatorScene {
 		//ef við gerum þetta fall rétt
 		// ef liftan er ekki full þá kalla á wait?
 
-		//dumb code, replace it!
-		switch(elevator) {
-		case 1: return 1;
-		case 2: return 4;
-		default: return 3;
-		}
+	    return numberOfPeopleInEleveter;
 	}
 
 	//Base function: definition must not change, but add your code
@@ -280,7 +296,7 @@ public class ElevatorScene {
 		try {
 			
 			exitedCountMutex.acquire();
-			exitedCount.set(floor, (exitedCount.get(floor) + 1));
+			    exitedCount.set(floor, (exitedCount.get(floor) + 1));
 			exitedCountMutex.release();
 
 		} catch (InterruptedException e) {
