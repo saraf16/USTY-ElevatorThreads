@@ -39,9 +39,13 @@ public class Person implements Runnable {
 		ElevatorScene.scene.decrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 
 		try {
-			ElevatorScene.elevatorWaitSecentMUTEX.acquire();
-				ElevatorScene.outSemaphore.acquire();
-			ElevatorScene.elevatorWaitSecentMUTEX.release();
+			ElevatorScene.elevatorWaitSecentMUTEX[destinationFloor].acquire();
+
+				ElevatorScene.outSemaphores[destinationFloor].acquire();
+
+			ElevatorScene.elevatorWaitSecentMUTEX[destinationFloor].release();
+
+			System.out.println("destinationFloor" +  destinationFloor);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -49,9 +53,6 @@ public class Person implements Runnable {
 		ElevatorScene.scene.decrementPeopleInEleveter();
 		ElevatorScene.scene.personExitsAtFloor(destinationFloor);
 		ElevatorScene.scene.getExitedCountAtFloor(destinationFloor);
-
-
-
 
 
 		// Person is in elevator(through barrier)

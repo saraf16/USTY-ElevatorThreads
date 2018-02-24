@@ -38,7 +38,7 @@ public class ElevatorScene {
 
     public static Semaphore inSemaphore; // mætti mögulega vera private?
 
-    public static Semaphore outSemaphore;// mættu mögulega vara private?
+    public static Semaphore outSemaphores[];// mættu mögulega vara private?
 
     public static ElevatorScene scene; //geturm verið her sem stakið eða inn í
     //Person og þá er Person með private ElevatorScene scene en þa þarf smið
@@ -74,7 +74,10 @@ public class ElevatorScene {
 
     public static Semaphore elevatornCountMUTEX;
 
-    public static Semaphore elevatorWaitSecentMUTEX;
+    public static Semaphore elevatorWaitSecentMUTEX[];
+
+    public static Semaphore elevatorReleseMUTEX[];
+
 
 
     //á lika vera elveter count
@@ -84,7 +87,7 @@ public class ElevatorScene {
 
 	//Base function: definition must not change
 	//Necessary to add your code in this one
-	public void restartScene(int numberOfFloors, int numberOfElevators) {
+	public void restartScene(final int numberOfFloors, int numberOfElevators) {
 
 		elevetorMayDie = true;
 
@@ -106,66 +109,88 @@ public class ElevatorScene {
 
 		scene = this;
         inSemaphore = new Semaphore(0);
-        outSemaphore = new Semaphore(0);
         personCountMUTEX = new Semaphore(1);
         elevatorWaitFistMUTEX = new Semaphore(1);
-        elevatorWaitSecentMUTEX = new Semaphore(1);
         elevatornCountMUTEX = new Semaphore(1);
         numberOfPeopleInEleveter = 0;
+
+        outSemaphores = new Semaphore[numberOfFloors];
+        elevatorWaitSecentMUTEX = new Semaphore[numberOfFloors];
+        elevatorReleseMUTEX = new Semaphore[numberOfFloors];
+
+
+
+        for (int i = 0; i < numberOfFloors; i++) {
+            outSemaphores[i] = new Semaphore(0);
+            elevatorWaitSecentMUTEX[i] = new Semaphore(1);
+
+        }
 
 
 		elevatorTread = new Thread(new Runnable() { //þarf að breyta þessu?
 
             public void run () {
 
-                while(true){
+             do{
 
-                    if (ElevatorScene.elevetorMayDie) {
-                        return;
-                    }
+                 currentFloor = 0;
 
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                 if (ElevatorScene.elevetorMayDie) {
+                     return;
+                 }
 
-
-                    System.out.println("getNumberOfPeopleInElevator(1) "+ getNumberOfPeopleInElevator(currentFloor));
-                    for(int i = 0; i < 6 ; i++){
-                        ElevatorScene.inSemaphore.release(); //signal ++
-                        System.out.println("i = " + i);
-
-                    }
-
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                 try {
+                     Thread.sleep(1500);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
 
 
-                    currentFloor++;
+                 //System.out.println("getNumberOfPeopleInElevator(1) "+ getNumberOfPeopleInElevator(currentFloor));
+                 for(int i = 0; i < 6 ; i++){
+                     try {
+                         elevatorWaitFistMUTEX.acquire();
+                            ElevatorScene.inSemaphore.release(); //signal ++
+                         elevatorWaitFistMUTEX.release();
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
 
 
-                   //System.out.println("getNumberOfPeopleInElevator(2) "+ getNumberOfPeopleInElevator(currentFloor));
-                    for(int i = 0; i < 6 ; i++){
-                        ElevatorScene.outSemaphore.release();
-                        System.out.println("i = " + i);
+                 }
 
-                    }
+                 //up
+                 while(currentFloor != (numberOfFloors - 1)){
 
 
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                     try {
+                         Thread.sleep(1500);
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
 
 
-                    currentFloor--;
-                }
+                     currentFloor++;
 
+
+                     System.out.println("getNumberOfPeopleInElevato(" + currentFloor + ")"+ getNumberOfPeopleInElevator(currentFloor));
+                     for(int i = 0; i < 6 ; i++){
+
+                         try {
+                             elevatorWaitSecentMUTEX[currentFloor].acquire();
+                                ElevatorScene.outSemaphores[currentFloor].release();
+                             elevatorWaitSecentMUTEX[currentFloor].release();
+                         } catch (InterruptedException e) {
+                             e.printStackTrace();
+                         }
+                         System.out.println("i = " + i);
+
+                     }
+
+                 }
+
+
+             }while(true);
 
             }
 
@@ -247,7 +272,7 @@ public class ElevatorScene {
             ElevatorScene.elevatornCountMUTEX.acquire();
                 ElevatorScene.numberOfPeopleInEleveter--;
             ElevatorScene.elevatornCountMUTEX.release();
-            System.out.println("PEOPLE CLASSI -- = " + numberOfPeopleInEleveter);
+            //System.out.println("PEOPLE CLASSI -- = " + numberOfPeopleInEleveter);
 
 
         } catch (InterruptedException e) {
@@ -261,7 +286,7 @@ public class ElevatorScene {
             ElevatorScene.elevatornCountMUTEX.acquire();
                 ElevatorScene.numberOfPeopleInEleveter++;
             ElevatorScene.elevatornCountMUTEX.release();
-            System.out.println("PEOPLE CLASSI ++ = " + numberOfPeopleInEleveter);
+            //System.out.println("PEOPLE CLASSI ++ = " + numberOfPeopleInEleveter);
 
 
         } catch (InterruptedException e) {
