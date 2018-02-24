@@ -26,22 +26,30 @@ public class Person implements Runnable {
 		ElevatorScene.scene.incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 
 		try {
-			ElevatorScene.elevatorWaitMUTEX.acquire(); 
-				ElevatorScene.inSemaphore.acquire(); // wait
-			ElevatorScene.elevatorWaitMUTEX.release();
+			ElevatorScene.elevatorWaitFistMUTEX.acquire();
+				ElevatorScene.inSemaphore.acquire();
+			ElevatorScene.elevatorWaitFistMUTEX.release();
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
+		ElevatorScene.scene.incrementPeopleInEleveter();
+
 		ElevatorScene.scene.decrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 
-
 		try {
-			ElevatorScene.outSemaphore.acquire(); //wait
+			ElevatorScene.elevatorWaitSecentMUTEX.acquire();
+				ElevatorScene.outSemaphore.acquire();
+			ElevatorScene.elevatorWaitSecentMUTEX.release();
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		ElevatorScene.scene.decrementPeopleInEleveter();
+		ElevatorScene.scene.personExitsAtFloor(destinationFloor);
+		ElevatorScene.scene.getExitedCountAtFloor(destinationFloor);
+
 
 
 

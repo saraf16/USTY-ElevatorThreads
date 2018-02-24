@@ -1,5 +1,7 @@
 package com.ru.usty.elevator;
 
+import org.lwjgl.Sys;
+
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -45,7 +47,7 @@ public class ElevatorScene {
 
 	public static int currentFloor;
 
-	public static int numberOfPeopleInEleveter = 0;
+	public static int numberOfPeopleInEleveter;
 
 
 	//ekki láta þessa tölu niður fyrir 50 eða 30 millisecontur
@@ -64,13 +66,18 @@ public class ElevatorScene {
 
 	public static Semaphore exitedCountMutex;
 
-	public static Semaphore elevatorWaitMUTEX; //nota inn i PERSON inn í try hja þar
+	public static Semaphore elevatorWaitFistMUTEX; //nota inn i PERSON inn í try hja þar
 	//þar sem semaphore er að waita og gera þá utan um hana mutex
 	//ég mundi segja mutex fyrir hverja hæð
 
 	public static Semaphore personCountMUTEX;
 
-	//á lika vera elveter count
+    public static Semaphore elevatornCountMUTEX;
+
+    public static Semaphore elevatorWaitSecentMUTEX;
+
+
+    //á lika vera elveter count
 
 
 
@@ -98,63 +105,73 @@ public class ElevatorScene {
 		elevetorMayDie = false;
 
 		scene = this;
-        inSemaphore = new Semaphore(6);
-        outSemaphore = new Semaphore(6);
+        inSemaphore = new Semaphore(0);
+        outSemaphore = new Semaphore(0);
         personCountMUTEX = new Semaphore(1);
-        elevatorWaitMUTEX = new Semaphore(1);
+        elevatorWaitFistMUTEX = new Semaphore(1);
+        elevatorWaitSecentMUTEX = new Semaphore(1);
+        elevatornCountMUTEX = new Semaphore(1);
+        numberOfPeopleInEleveter = 0;
+
 
 		elevatorTread = new Thread(new Runnable() { //þarf að breyta þessu?
 
             public void run () {
 
-            	if(ElevatorScene.elevetorMayDie){
-            		return;
-				}
+                while(true){
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    if (ElevatorScene.elevetorMayDie) {
+                        return;
+                    }
+
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println("getNumberOfPeopleInElevator(1) "+ getNumberOfPeopleInElevator(currentFloor));
+                    for(int i = 0; i < 6 ; i++){
+                        ElevatorScene.inSemaphore.release(); //signal ++
+                        System.out.println("i = " + i);
+
+                    }
+
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    currentFloor++;
+
+
+                   //System.out.println("getNumberOfPeopleInElevator(2) "+ getNumberOfPeopleInElevator(currentFloor));
+                    for(int i = 0; i < 6 ; i++){
+                        ElevatorScene.outSemaphore.release();
+                        System.out.println("i = " + i);
+
+                    }
+
+
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    currentFloor--;
                 }
 
 
-                while(ElevatorScene.inSemaphore. != 0) {
-                    ElevatorScene.inSemaphore.release(); //signal
-
-
-                    numberOfPeopleInEleveter++;
-
-                    decrementNumberOfPeopleWaitingAtFloor(0);
-                }
-
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                ElevatorScene.currentFloor++;
-
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                ElevatorScene.outSemaphore.release(); //signal
-
-                numberOfPeopleInEleveter--;
-
-                personExitsAtFloor(1);
-                getExitedCountAtFloor(1);
             }
 
         });
 
 		elevatorTread.start();
-
-
-
-
 
 		/**
 		 * Important to add code here to make new
@@ -193,14 +210,16 @@ public class ElevatorScene {
 
         Thread thread = new Thread(new Person(sourceFloor, destinationFloor));
         thread.start();
-		/**
-		 * Important to add code here to make a
-		 * new thread that runs your person-runnable
-		 * 
-		 * Also return the Thread object for your person
-		 * so that it can be reaped in the testSuite
-		 * (you don't have to join() yourself)
-		 */
+        //System.out.println("Person thread starts");
+
+        /**
+         * Important to add code here to make a
+         * new thread that runs your person-runnable
+         *
+         * Also return the Thread object for your person
+         * so that it can be reaped in the testSuite
+         * (you don't have to join() yourself)
+         */
 
 	    //incrementNumberOfPeopleWaitingAtFloor(sourceFloor);
 		return thread;  //this means that the testSuite will not wait for the threads to finish
@@ -208,23 +227,47 @@ public class ElevatorScene {
 
 	//Base function: definition must not change, but add your code
 	public int getCurrentFloorForElevator(int elevator) {
-
-
 		//dumb code, replace it
 		return currentFloor;
 	}
 
+    public int freeSlotsInElevator() {
+        return 6 - getNumberOfPeopleInElevator(0);
+    }
 	//Base function: definition must not change, but add your code
 	public int getNumberOfPeopleInElevator(int elevator) {
-		//lifta relesar þegar hun kemur á hæð 6 sinnum - kallar á fallið signal
-		//eins oft og hun er með laus pláss
-		//ef hun kemur ekki tóm þá bbara 6 minus hvað eru margir í
-		//getum notað þetta fall
-		//ef við gerum þetta fall rétt
-		// ef liftan er ekki full þá kalla á wait?
 
 	    return numberOfPeopleInEleveter;
 	}
+
+
+    public void decrementPeopleInEleveter() {
+
+        try {
+            ElevatorScene.elevatornCountMUTEX.acquire();
+                ElevatorScene.numberOfPeopleInEleveter--;
+            ElevatorScene.elevatornCountMUTEX.release();
+            System.out.println("PEOPLE CLASSI -- = " + numberOfPeopleInEleveter);
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void incrementPeopleInEleveter() {
+
+        try {
+            ElevatorScene.elevatornCountMUTEX.acquire();
+                ElevatorScene.numberOfPeopleInEleveter++;
+            ElevatorScene.elevatornCountMUTEX.release();
+            System.out.println("PEOPLE CLASSI ++ = " + numberOfPeopleInEleveter);
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 	//Base function: definition must not change, but add your code
 	public int getNumberOfPeopleWaitingAtFloor(int floor) {
